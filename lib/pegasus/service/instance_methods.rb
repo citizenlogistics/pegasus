@@ -1,9 +1,12 @@
 module Pegasus
-  module Service
+  class Service
     module InstanceMethods
 
       def run_task taskspec = nil
-        taskspec ||= blpop(wait_queue_key, 0)[1]
+        taskspec or begin
+          return unless pair = blpop(wait_queue_key, 10)
+          taskspec = pair[1]
+        end
         set processing_key, "#{Time.unix} #{taskspec}"
         queued_at, ticket_no, task_marshal = taskspec.split(' ', 3)
         args = serializer.load(task_marshal)

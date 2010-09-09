@@ -17,7 +17,7 @@ module Pegasus
     config :raise_errors    do true; end
 
     extend Forwardable
-    def_delegators :redis, :rpush, :llen, :lindex, :get, :set, :del, :lpop, :incrby
+    def_delegators :redis, :rpush, :llen, :lindex, :get, :set, :del, :lpop, :incrby, :blpop
 
     extend ClassMethods
     def_delegators 'self.class', :track, :wait
