@@ -8,7 +8,7 @@ begin
     gem.summary = %Q{pegasus: unicorn-steady, redis-backed, shared-nothing worker processes}
     gem.description = %Q{pegasus: unicorn-steady, redis-backed, shared-nothing worker processes}
     gem.email = "joe@citizenlogistics.com"
-    gem.homepage = "http://github.com/jxe/pegasus"
+    gem.homepage = "http://github.com/citizenlogistics/pegasus"
     gem.authors = ["Joe Edelman"]
     gem.add_dependency 'configurer'
     gem.add_dependency 'unicorn_horn'
