@@ -10,8 +10,8 @@ begin
     gem.email = "joe@citizenlogistics.com"
     gem.homepage = "http://github.com/jxe/pegasus"
     gem.authors = ["Joe Edelman"]
-    s.add_dependency 'configurer'
-    s.add_dependency 'unicorn_horn'
+    gem.add_dependency 'configurer'
+    gem.add_dependency 'unicorn_horn'
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
