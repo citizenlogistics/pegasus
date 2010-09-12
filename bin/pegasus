@@ -1,4 +1,12 @@
 #!/usr/bin/env ruby
 require 'unicorn_horn'
-require ARGV.shift
-UnicornHorn::Runner.new( eval "[#{ARGV.join(',')}]" ).start
+$bootfile = ARGV.shift
+
+if (ENV['PRELOAD_APP']) then require $bootfile; end
+
+class LoadWrapper < Struct.new(:klassname)
+  def new; require $bootfile; (eval klassname).new; end
+end
+
+handlers = ARGV.map{ |klassname| LoadWrapper.new(klassname) }
+UnicornHorn::Runner.new( handlers ).start
