@@ -5,8 +5,10 @@ require 'pegasus/service/instance_methods'
 module Pegasus
   class Service
     extend Configurer
-    config :redis           do Thread.current[:redis]          ||= ::Redis.new; end
-    config :blocking_redis  do Thread.current[:blocking_redis] ||= ::Redis.new(:timeout=>0); end
+    config :redis_db        do 0; end
+    config :redis_options   do {:db => redis_db}; end
+    config :redis           do Thread.current[:redis]   ||= ::Redis.new(redis_options); end
+    config :blocking_redis  do Thread.current[:blredis] ||= ::Redis.new(redis_options.merge(:timeout => 0)); end
     config :logger          do Logger.new(STDERR); end
     config :serializer      do Marshal; end
     config :redis_prefix    do "redis_svc_" end
