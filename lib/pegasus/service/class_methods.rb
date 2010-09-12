@@ -33,7 +33,7 @@ module Pegasus
     end
 
     def wait ticket_no
-      @instance.playout if @instance
+      playout if @instance
       logger.debug "waiting on ticket #{ticket_no}"
       blpop ticket_no, 0
       del ticket_no
