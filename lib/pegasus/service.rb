@@ -1,3 +1,4 @@
+require 'logger'
 require 'thread'
 require 'pegasus/service/class_methods'
 require 'pegasus/service/instance_methods'
