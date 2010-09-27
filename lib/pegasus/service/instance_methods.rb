@@ -32,12 +32,6 @@ module Pegasus
         logger.info "#{self.class.name} NOOP"
       end
 
-      def do_discard_queue!
-        backup_key = "#{wait_queue_key}_backup_#{Time.unix}"
-        renamenx wait_queue_key, backup_key
-        backup_key
-      end
-
       def play
         while next_task = lpop(wait_queue_key)
           run_task next_task

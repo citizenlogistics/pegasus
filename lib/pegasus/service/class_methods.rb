@@ -3,7 +3,7 @@ module Pegasus
     def instance; @instance ||= new; end
 
     extend Forwardable
-    def_delegators :redis, :rpush, :llen, :lindex, :get, :set, :del, :lpop, :incrby
+    def_delegators :redis, :rpush, :llen, :lindex, :get, :set, :del, :lpop, :incrby, :renamenx
 
     def playout *svcs
       @svcs ||= []
@@ -50,6 +50,12 @@ module Pegasus
       super unless method_defined? "do_#{a.first}"
       raise "blocks are not allowed for queued methods" if block_given?
       queue_with_ticket(nil, *a)
+    end
+
+    def discard_queue!
+      backup_key = "#{wait_queue_key}_backup_#{Time.unix}"
+      renamenx wait_queue_key, backup_key
+      backup_key
     end
 
     def trouble?
