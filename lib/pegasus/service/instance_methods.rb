@@ -32,7 +32,7 @@ module Pegasus
         logger.info "#{self.class.name} NOOP"
       end
 
-      def discard_queue!
+      def do_discard_queue!
         backup_key = "#{wait_queue_key}_backup_#{Time.unix}"
         renamenx wait_queue_key, backup_key
         backup_key
