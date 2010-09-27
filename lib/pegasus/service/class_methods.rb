@@ -5,8 +5,9 @@ module Pegasus
     extend Forwardable
     def_delegators :redis, :rpush, :llen, :lindex, :get, :set, :del, :lpop, :incrby
 
-    def playout svcs = nil
-      @svcs = svcs.map{ |s| s.instance } if svcs
+    def playout *svcs
+      @svcs ||= []
+      @svcs.concat svcs.map{ |s| s.instance }
       true while @svcs.any?{ |s| s.play }
     end
 
@@ -33,7 +34,7 @@ module Pegasus
     end
 
     def wait ticket_no
-      playout if @instance
+      @instance.play if @instance
       logger.debug "waiting on ticket #{ticket_no}"
       blpop ticket_no, 0
       del ticket_no
