@@ -32,6 +32,10 @@ module Pegasus
         logger.info "#{self.class.name} NOOP"
       end
 
+      def do_eval x
+        logger.info "#{self.class.name} eval: #{eval x}"
+      end
+
       def play
         while next_task = lpop(wait_queue_key)
           run_task next_task
